@@ -1,0 +1,66 @@
+<template>
+    <footer class="ckz_footer" style={footerStyles}>
+
+        <template if:true={showImage}>
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_12-of-12">
+                    <div class="slds-align_absolute-center">
+                        <img src={imgUrl} style={imageStyles}/>
+                    </div>
+                </div>
+            </div>
+            
+        </template>
+        
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="footer-link slds-m-top_medium slds-align_absolute-center">
+                    <ul class="footer-link-list slds-list_horizontal slds-has-inline-block-links_space">
+                        <template if:true={socialFacebook}>
+                            <li>
+                                <a href="#" class="social">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x fa-inverse"></i>
+                                        <i class="fab fa-facebook-f fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </template>
+
+                        <template if:true={socialTwitter}>
+                            <li>
+                                <a href="#" class="social">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x fa-inverse"></i>
+                                        <i class="fab fa-twitter fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </template>
+                        
+                        <template if:true={socialLinkedin}>
+                            <li>
+                                <a href="#" class="social">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x fa-inverse"></i>
+                                        <i class="fab fa-linkedin fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_12-of-12">
+                <div class="slds-align_absolute-center">
+                    <span class="footer-builtOn">built on </span>
+                    <span class="footer-logo-commerceCloud"></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</template>

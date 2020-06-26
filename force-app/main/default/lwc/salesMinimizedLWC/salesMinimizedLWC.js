@@ -1,8 +1,10 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire, api } from 'lwc';
 import { assignHandler, maximize } from 'lightningsnapin/minimized';
+import getChatImagePath from '@salesforce/apex/ChatUtility.getChatImagePath';
 
 export default class SalesMinimizedLWC extends LightningElement {
     @track message;
+    @api imagePath;
 
     constructor() {
         super();
@@ -22,10 +24,21 @@ export default class SalesMinimizedLWC extends LightningElement {
         assignHandler("postchatState", this.setMinimizedMessage.bind(this));
     }
 
+    @wire(getChatImagePath, {url: window.location.href}) 
+        getChatImagePath(resp) {
+            this.imagePath = resp.data;
+            console.log("getChatImagePath: " + resp);
+        }
+
     /**
      * Handler for when the minimized container is clicked.
      */
     handleClick() {
+        console.log("Handle Click on Minimize component fired");
+        var event = new CustomEvent('chatnow', {
+            bubbles: true
+          });
+        window.dispatchEvent(event);
         maximize();
     }
 

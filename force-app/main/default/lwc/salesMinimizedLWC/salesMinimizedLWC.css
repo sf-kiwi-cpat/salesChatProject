@@ -6,19 +6,19 @@
     margin: 0;
     min-width: 12em;
     max-width: 14em;
-    height: 46px;
-    width: 192px;
+    height: 100px;
+    width: 100px;
     max-height: 100%;
     border-radius: 8px 8px 0 0;
     text-align: center;
     text-decoration: none;
-    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
+    
     pointer-events: all;
     overflow: hidden;
-    background-color: rgb(0, 112, 210);
+    background-color: transparent;
     font-size: 16px;
 }
-
+/*
 .minimizedContainer:focus,
 .minimizedContainer:hover {
     color: rgb(255, 255, 255);
@@ -32,3 +32,4 @@
     padding: 0 8px;
     color: rgb(255, 255, 255);
 }
+*/
