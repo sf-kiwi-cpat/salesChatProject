@@ -1,4 +1,3 @@
-
 /**
  * A basic pub-sub mechanism for sibling component communication
  *

@@ -1,10 +1,13 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { assignHandler, maximize } from 'lightningsnapin/minimized';
 import getChatImagePath from '@salesforce/apex/ChatUtility.getChatImagePath';
+import {  fireEvent } from 'c/pubsub';
+import { CurrentPageReference } from 'lightning/navigation';
 
 export default class SalesMinimizedLWC extends LightningElement {
     @track message;
     @api imagePath;
+    @wire(CurrentPageReference) pageRef;
 
     constructor() {
         super();
@@ -39,6 +42,7 @@ export default class SalesMinimizedLWC extends LightningElement {
             bubbles: true
           });
         window.dispatchEvent(event);
+        fireEvent(this.pageRef, 'chatnow', null);
         maximize();
     }
 

@@ -1,5 +1,5 @@
 import { api, track, wire } from 'lwc';
-import {  fireEvent } from 'c/pubsub';
+import { fireEvent } from 'c/pubsub';
 import { CurrentPageReference } from 'lightning/navigation';
 import BasePrechat from 'lightningsnapin/basePrechat';
 import getWelcomeMessage from '@salesforce/apex/ChatUtility.getWelcomeMessage';
@@ -23,6 +23,8 @@ export default class SalesPreChatLWC extends BasePrechat {
     @api isRepeatVisitor = false;
     @track fields;
     @track namelist;
+    @api originalTitle;
+    @api timerId;
 
     @wire(CurrentPageReference) pageRef;
 
@@ -34,6 +36,7 @@ export default class SalesPreChatLWC extends BasePrechat {
             if (resp.data)
             {
                 this.welcomeMessage = resp.data[0];
+                this.startTimer();
             }
         }
 
@@ -51,6 +54,9 @@ export default class SalesPreChatLWC extends BasePrechat {
      * Set the button label and prepare the prechat fields to be shown in the form.
      */
     connectedCallback() {
+        console.log("window.document.title: " + window.document.title);
+        this.originalTitle = window.document.title;
+        console.log("this.originalTitle: " + this.originalTitle);
         this.checkCookie();  
         console.log("this.prechatFields:" + this.prechatFields);
         this.fields = this.prechatFields.map(field => {
@@ -79,9 +85,11 @@ export default class SalesPreChatLWC extends BasePrechat {
      * On clicking the 'Start Chatting' button, send a chat request.
      */
     handleStartChat() {
+        this.stopTimer();
         this.template.querySelectorAll("lightning-input").forEach(input => {
             this.fields[this.namelist.indexOf(input.name)].value = input.value;
         });
+        
         if (this.validateFields(this.fields).valid) {
             this.startChat(this.fields);
             var event = new CustomEvent('chatnow', {
@@ -154,5 +162,29 @@ export default class SalesPreChatLWC extends BasePrechat {
         );
         // Dispatch the event.
         window.dispatchEvent(event);
+    }
+
+    startTimer()
+    {
+        this.timerId = setInterval(this.updateTitle, 1000);
+    }
+
+    stopTimer()
+    {
+        // Clear the timer that is changing the title of the browser
+        clearInterval(this.timerId);
+        window.document.title = this.originalTitle;
+    }
+
+    updateTitle()
+    {
+        console.log("UpdateTitle Called: " + window.document.title);
+        if (window.document.title === this.originalTitle)
+        {
+            window.document.title = "(1) " + this.welcomeMessage;
+        }
+        else {
+            window.document.title = this.originalTitle;
+        }
     }
 }
